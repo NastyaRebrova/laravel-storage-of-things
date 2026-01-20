@@ -11,9 +11,9 @@
         <div class="container">
             <div class="nav-links">
                 <a href="/" class="nav-link">Главная</a>
+                <a href="{{ route('things.index') }}" class="nav-link">Мои вещи</a>
+                <a href="/places" class="nav-link">Места хранения</a>
                 @auth
-                    <a href="/things" class="nav-link">Мои вещи</a>
-                    <a href="/places" class="nav-link">Места хранения</a>
                     <a href="/auth/logout" class="nav-link">Выйти</a>
                 @endauth
                 
@@ -32,7 +32,6 @@
             @auth
                 <div class="alert alert-success">
                     <p>Вы авторизованы как <strong>{{ auth()->user()->name }}</strong></p>
-                    <p>Используйте навигационное меню для работы с системой.</p>
                 </div>
             @else
                 <div class="alert alert-warning">
