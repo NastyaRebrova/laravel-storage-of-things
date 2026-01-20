@@ -42,4 +42,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // вещи которыми владеет
+    public function ownedThings() 
+    {
+        return $this->hasMany(Thing::class, 'master');
+    }
+
+    // вещи которые использует 
+    public function usedThings()
+    {
+        return $this->belongsToMany(
+            Thing::class,      
+            'uses',            // промежуточная таблица
+            'user_id',       
+            'thing_id'         
+        )
+        ->withPivot('amount', 'place_id')  // дополнительные поля из промежуточной таблицы
+        ->withTimestamps();    // временные метки из промежуточной таблицы
+    }
+
+    // записи об использовании - история
+    public function useRecords()
+    {
+        return $this->hasMany(UseRecord::class, 'user_id');
+    }
 }
