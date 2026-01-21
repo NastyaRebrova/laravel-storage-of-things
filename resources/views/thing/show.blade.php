@@ -23,6 +23,11 @@
                         <a href="{{ route('things.edit', ['thing' => $thing->id]) }}" class="btn">
                             Редактировать
                         </a>
+                        @if($thing->master === auth()->id())
+                            <a href="{{ route('use.create', ['thing' => $thing->id]) }}" class="btn" style="background-color: #17a2b8; color: white; margin-left: 10px;">
+                                Передать другому пользователю
+                            </a>
+                        @endif
                         <form action="{{ route('things.destroy', ['thing' => $thing->id]) }}" 
                               method="POST" 
                               style="display: inline-block; margin-left: 10px;"

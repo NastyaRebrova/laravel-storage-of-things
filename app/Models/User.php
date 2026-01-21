@@ -67,4 +67,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(UseRecord::class, 'user_id');
     }
+
+    public function receivedThings()
+    {
+        return $this->hasManyThrough(
+            Thing::class,
+            UseRecord::class,
+            'user_id',      
+            'id',           
+            'id',          
+            'thing_id'       
+        );
+    }
 }

@@ -11,8 +11,8 @@
         <div class="container">
             <div class="nav-links">
                 <a href="/" class="nav-link">Главная</a>
-                <a href="{{ route('things.index') }}" class="nav-link">Мои вещи</a>
-                <a href="/places" class="nav-link">Места хранения</a>
+                <a href="{{ route('things.index') }}" class="nav-link">Список вещей</a>
+                <a href="{{ route('places.index') }}" class="nav-link">Места хранения</a>
                 @auth
                     <a href="/auth/logout" class="nav-link">Выйти</a>
                 @endauth
@@ -33,6 +33,21 @@
                 <div class="alert alert-success">
                     <p>Вы авторизованы как <strong>{{ auth()->user()->name }}</strong></p>
                 </div>
+                @if(auth()->user()->receivedThings()->count() > 0)
+                    <div class="alert alert-info" style="margin-top: 20px;">
+                        <h4>Вещи, переданные вам:</h4>
+                        <ul>
+                            @foreach(auth()->user()->receivedThings as $thing)
+                                <li>
+                                    <a href="{{ route('things.show', ['thing' => $thing->id]) }}">
+                                        {{ $thing->name }}
+                                    </a>
+                                    от {{ $thing->owner->name }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             @else
                 <div class="alert alert-warning">
                     <p>Для работы с системой необходимо <a href="/auth/login">войти</a> 
